@@ -4,7 +4,7 @@
 #include<string.h>
 #include<math.h>
 #define IN 99
-#define N 6
+#define N 22
 int dijkstra(int cost[][N], int source, int target);
 int main()
 {
@@ -19,7 +19,7 @@ int main()
         for(y=x+1;y< N;y++)
         {
             printf("Enter the weight of the path between nodes %d and %d: ",x,y);
-            scanf("%d",&w);
+            w=5;;
             cost [x][y] = cost[y][x] = w;
         }
         printf("\n");
@@ -50,18 +50,26 @@ int dijsktra(int cost[][N],int source,int target)
         for(i=1;i< N;i++)
         {
             d = dist[start] +cost[start][i];
+            printf("%d . if öncesi %d \n", i,d);
             if(d< dist[i]&&selected[i]==0)
             {
+                printf("%d . 1.if ici %d d \n", i,d);
+                printf("%d . 1.if ici 2 %d dist[i]\n",i, dist[i]);
                 dist[i] = d;
+                printf("%d . 1.if ici 3 %d d \n",i, d);
                 prev[i] = start;
             }
             if(min>dist[i] && selected[i]==0)
             {
+                printf("%d . 2.if ici %d dist[i]\n",i, dist[i]);
                 min = dist[i];
+                printf("%d . 2.if ici 2 %d dist[i]\n",i, dist[i]);
                 m = i;
             }
         }
+        printf("%d . son %d start \n",i, start);
         start = m;
+        printf("%d . son %d m \n",i, m);
         selected[start] = 1;
     }
     start = target;
