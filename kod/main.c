@@ -21,6 +21,7 @@ int main()
     int distance[22][7];
     int i , x , y;
     char chara , save ,a[2] , b[2] , c[2];
+    chara=getc(myFile);
     while(!(feof(myFile))){
             for(i=0;i<2;i++){
                 a[i]='d';
@@ -31,7 +32,7 @@ int main()
             for(i=0;i<2;i++){
                 c[i]='d';
             }
-            chara=getc(myFile);
+
             i=0;
             if(chara=='a'){
                 while(!(feof(myFile))){
@@ -43,6 +44,7 @@ int main()
                     a[i]=chara;
                     i++;
                 }
+                continue;
             }
             i=0;
             if(chara=='b'){
@@ -55,32 +57,23 @@ int main()
                     b[i]=chara;
                     i++;
                 }
-
+                continue;
             }
             i=0;
             if(chara=='c'){
                 while(!(feof(myFile))){
                     if(chara=='a'){
-                    distance[x][y]=atoi(b);
-                    printf("%d**\n" , distance[x][y]);
+                    distance[x][y]=atoi(c);
+                    printf("%d\n" , distance[x][y]);
                         break;}
                     chara=getc(myFile);
                     c[i]=chara;
                     i++;
                 }
+                continue;
             }
             i=0;
-            if(chara=='a'){
-                while(!(feof(myFile))){
-                    if(chara=='b'){
-                    x=atoi(a);
-                    printf("%dx" , x);
-                        break;}
-                    chara=getc(myFile);
-                    a[i]=chara;
-                    i++;
-                }
-            }
+
         }
 
     return 0;
