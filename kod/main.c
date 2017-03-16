@@ -75,6 +75,6 @@ int main()
             i=0;
 
         }
-    printf("%d*-*-*--" , distance[1][4]);
+    printf("%d" , distance[22][5]);
     return 0;
 }
