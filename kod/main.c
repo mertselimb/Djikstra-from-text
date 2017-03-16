@@ -5,10 +5,8 @@
 #include<math.h>
 int reverse(int n) {
    static int r = 0;
-
    if (n == 0)
       return 0;
-
    r = r * 10;
    r = r + n % 10;
    reverse(n/10);
@@ -18,9 +16,13 @@ int main()
 {
     FILE *myFile;
     myFile = fopen("sehirmesafe.txt", "r");
-    int distance[23][7];
+    int distance[23][23];
+    int f , g ,source,target,least=99,start;
+    for(f=1;f<23;f++)
+        for(g=1;g<23;g++)
+            distance[f][g]=9999;
     int i , x , y;
-    char chara , save ,a[2] , b[2] , c[2];
+    char chara , selected[23] ,a[2] , b[2] , c[2];
     chara=getc(myFile);
     while(!(feof(myFile))){
             for(i=0;i<2;i++){
@@ -38,7 +40,6 @@ int main()
                 while(!(feof(myFile))){
                     if(chara=='b'){
                     x=atoi(a);
-                    printf("%dx" , x);
                         break;}
                     chara=getc(myFile);
                     a[i]=chara;
@@ -51,7 +52,6 @@ int main()
                 while(!(feof(myFile))){
                     if(chara=='c'){
                     y=atoi(b);
-                    printf("%dy" , y);
                         break;}
                     chara=getc(myFile);
                     b[i]=chara;
@@ -64,7 +64,6 @@ int main()
                 while(!(feof(myFile))){
                     if(chara=='a'){
                     distance[x][y]=atoi(c);
-                    printf("%d\n" , distance[x][y]);
                         break;}
                     chara=getc(myFile);
                     c[i]=chara;
@@ -75,6 +74,24 @@ int main()
             i=0;
 
         }
-    printf("%d" , distance[22][5]);
+    printf("Please write the plate number of the selected city:");
+    scanf("%d" , &source);
+    printf("Please write the plate number of the destination:");
+    scanf("%d" , &target);
+    for(f=1;f<23;f++)
+        selected[f]=0;
+    selected[source]=1;
+    start=source;
+    /*while(1){
+        for(f=1;f<23;f++){
+            if(distance[start][f]<least){
+                least=distance[start][f]
+            }
+            selected[f]=1;
+            start=f;
+            if(selected[source]=1)
+        }
+    }*/
+
     return 0;
 }
