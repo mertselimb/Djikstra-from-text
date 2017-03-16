@@ -18,7 +18,7 @@ int main()
 {
     FILE *myFile;
     myFile = fopen("sehirmesafe.txt", "r");
-    int distance[22][7];
+    int distance[23][7];
     int i , x , y;
     char chara , save ,a[2] , b[2] , c[2];
     chara=getc(myFile);
@@ -75,6 +75,6 @@ int main()
             i=0;
 
         }
-
+    printf("%d*-*-*--" , distance[1][4]);
     return 0;
 }
