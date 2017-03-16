@@ -3,84 +3,85 @@
 #include<process.h>
 #include<string.h>
 #include<math.h>
-#define IN 99
-#define N 22
-int dijkstra(int cost[][N], int source, int target);
+int reverse(int n) {
+   static int r = 0;
+
+   if (n == 0)
+      return 0;
+
+   r = r * 10;
+   r = r + n % 10;
+   reverse(n/10);
+   return r;
+}
 int main()
 {
-    int cost[N][N],i,j,w,ch,co;
-    int source, target,x,y;
-    printf("\t The Shortest Path Algorithm ( DIJKSTRA'S ALGORITHM in C \n\n");
-    for(i=1;i< N;i++)
-    for(j=1;j< N;j++)
-    cost[i][j] = IN;
-    for(x=1;x< N;x++)
-    {
-        for(y=x+1;y< N;y++)
-        {
-            printf("Enter the weight of the path between nodes %d and %d: ",x,y);
-            w=5;;
-            cost [x][y] = cost[y][x] = w;
-        }
-        printf("\n");
-    }
-    printf("\nEnter the source:");
-    scanf("%d", &source);
-    printf("\nEnter the target");
-    scanf("%d", &target);
-    co = dijsktra(cost,source,target);
-    printf("\nThe Shortest Path: %d",co);
-}
-int dijsktra(int cost[][N],int source,int target)
-{
-    int dist[N],prev[N],selected[N]={0},i,m,min,start,d,j;
-    char path[N];
-    for(i=1;i< N;i++)
-    {
-        dist[i] = IN;
-        prev[i] = -1;
-    }
-    start = source;
-    selected[start]=1;
-    dist[start] = 0;
-    while(selected[target] ==0)
-    {
-        min = IN;
-        m = 0;
-        for(i=1;i< N;i++)
-        {
-            d = dist[start] +cost[start][i];
-            printf("%d . if öncesi %d \n", i,d);
-            if(d< dist[i]&&selected[i]==0)
-            {
-                printf("%d . 1.if ici %d d \n", i,d);
-                printf("%d . 1.if ici 2 %d dist[i]\n",i, dist[i]);
-                dist[i] = d;
-                printf("%d . 1.if ici 3 %d d \n",i, d);
-                prev[i] = start;
+    FILE *myFile;
+    myFile = fopen("sehirmesafe.txt", "r");
+    int distance[22][7];
+    int i , x , y;
+    char chara , save ,a[2] , b[2] , c[2];
+    while(!(feof(myFile))){
+            for(i=0;i<2;i++){
+                a[i]='d';
             }
-            if(min>dist[i] && selected[i]==0)
-            {
-                printf("%d . 2.if ici %d dist[i]\n",i, dist[i]);
-                min = dist[i];
-                printf("%d . 2.if ici 2 %d dist[i]\n",i, dist[i]);
-                m = i;
+            for(i=0;i<2;i++){
+                b[i]='d';
+            }
+            for(i=0;i<2;i++){
+                c[i]='d';
+            }
+            chara=getc(myFile);
+            i=0;
+            if(chara=='a'){
+                while(!(feof(myFile))){
+                    if(chara=='b'){
+                    x=atoi(a);
+                    printf("%dx" , x);
+                        break;}
+                    chara=getc(myFile);
+                    a[i]=chara;
+                    i++;
+                }
+            }
+            i=0;
+            if(chara=='b'){
+                while(!(feof(myFile))){
+                    if(chara=='c'){
+                    y=atoi(b);
+                    printf("%dy" , y);
+                        break;}
+                    chara=getc(myFile);
+                    b[i]=chara;
+                    i++;
+                }
+
+            }
+            i=0;
+            if(chara=='c'){
+                while(!(feof(myFile))){
+                    if(chara=='a'){
+                    distance[x][y]=atoi(b);
+                    printf("%d**\n" , distance[x][y]);
+                        break;}
+                    chara=getc(myFile);
+                    c[i]=chara;
+                    i++;
+                }
+            }
+            i=0;
+            if(chara=='a'){
+                while(!(feof(myFile))){
+                    if(chara=='b'){
+                    x=atoi(a);
+                    printf("%dx" , x);
+                        break;}
+                    chara=getc(myFile);
+                    a[i]=chara;
+                    i++;
+                }
             }
         }
-        printf("%d . son %d start \n",i, start);
-        start = m;
-        printf("%d . son %d m \n",i, m);
-        selected[start] = 1;
-    }
-    start = target;
-    j = 0;
-    while(start != -1)
-    {
-        path[j++] = start+65;
-        start = prev[start];
-    }
-    path[j]='\0';
-    strrev(path);
-    printf("%s", path);
-    return dist[target];
+
+    return 0;
 }
