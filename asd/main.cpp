@@ -6,7 +6,8 @@
 #include<math.h>
 #include <limits.h>
 #include <stdlib.h>
-#define V 22
+#define V 23
+#define INFINITY 9999
 void dijkstra(int G[V][V],int n,int startnode,int d)
 {
     int cost[V][V],distance[V],pred[V];
@@ -73,7 +74,7 @@ int main()
 {
     FILE *myFile;
     myFile = fopen("sehirmesafe.txt", "r");
-    int f , g ,source,target,start,dist[22][22],i , x , y;
+    int f , g ,source,target,start,dist[V][V],i , x , y;
     char chara , selected[V] ,a[2] , b[2] , c[2];
     for(f=0;f<V;f++){
         for(g=0;g<V;g++){
@@ -134,6 +135,8 @@ int main()
     printf("Please write the plate number of the destination:");
     scanf("%d" , &target);
     dijkstra(dist, V , source , target );
-
+    for(target=1;target<V;target++)
+        dijkstra(dist, V , source , target );
+        printf("\n");
     return 0;
 }
