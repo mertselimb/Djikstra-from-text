@@ -1,8 +1,0 @@
-# depslib dependency file v1.0
-1489734232 source:d:\save\c save\prolab2-1\kod\main.c
-	<stdio.h>
-	<conio.h>
-	<process.h>
-	<string.h>
-	<math.h>
-

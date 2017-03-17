@@ -1,0 +1,142 @@
+#include <iostream>
+#include<stdio.h>
+#include<conio.h>
+#include<process.h>
+#include<string.h>
+#include<math.h>
+#include <limits.h>
+#include <stdlib.h>
+#define V 23
+#define INFINITY 9999
+void dijkstra(int graph[V][V],int n,int start,int d)
+{
+    int distance[V][V],distance[V],pred[V];
+    int selected[V],count,min,nextnode,i,j;
+    for(i=0;i<n;i++)
+        for(j=0;j<n;j++)
+            if(graph[i][j]==0)
+                distance[i][j]=INFINITY;
+            else
+                distance[i][j]=graph[i][j];
+    for(i=0;i<n;i++)
+    {
+        distance[i]=distance[start][i];
+        pred[i]=start;
+        selected[i]=0;
+    }
+
+    distance[start]=0;
+    selected[start]=1;
+    count=1;
+
+    while(count<n-1)
+    {
+        min=INFINITY;
+        for(i=0;i<n;i++)
+            if(distance[i]<min&&!selected[i])
+            {
+                min=distance[i];
+                nextnode=i;
+            }
+            selected[nextnode]=1;
+            for(i=0;i<n;i++)
+                if(!selected[i])
+                    if(min+distance[nextnode][i]<distance[i])
+                    {
+                        distance[i]=min+distance[nextnode][i];
+                        pred[i]=nextnode;
+                    }
+        count++;
+    }
+    for(i=0;i<n;i++)
+        if(i==d)
+        {
+            printf("\nDistance of node%d=%d",i,distance[i]);
+            printf("\nPath=%d",i);
+            j=i;
+            do
+            {
+                j=pred[j];
+                printf("<-%d",j);
+            }while(j!=start);
+    }
+}
+int reversefunc(int n) {
+   static int r = 0;
+   if (n == 0)
+      return 0;
+   r = r * 10;
+   r = r + n % 10;
+   reversefunc(n/10);
+   return r;
+}
+int main()
+{
+    FILE *myFile;
+    myFile = fopen("sehirmesafe.txt", "r");
+    int f , g ,source,target,start,dist[V][V],i , x , y;
+    char chara , selected[V] ,a[2] , b[2] , c[2];
+    for(f=0;f<V;f++){
+        for(g=0;g<V;g++){
+            dist[f][g]=0;}}
+    chara=getc(myFile);
+    while(!(feof(myFile))){
+            for(i=0;i<2;i++){
+                a[i]='d';
+            }
+            for(i=0;i<2;i++){
+                b[i]='d';
+            }
+            for(i=0;i<2;i++){
+                c[i]='d';
+            }
+
+            i=0;
+            if(chara=='a'){
+                while(!(feof(myFile))){
+                    if(chara=='b'){
+                    x=atoi(a);
+                        break;}
+                    chara=getc(myFile);
+                    a[i]=chara;
+                    i++;
+                }
+                continue;
+            }
+            i=0;
+            if(chara=='b'){
+                while(!(feof(myFile))){
+                    if(chara=='c'){
+                    y=atoi(b);
+                        break;}
+                    chara=getc(myFile);
+                    b[i]=chara;
+                    i++;
+                }
+                continue;
+            }
+            i=0;
+            if(chara=='c'){
+                while(!(feof(myFile))){
+                    if(chara=='a'){
+                    dist[x][y]=atoi(c);
+                        break;}
+                    chara=getc(myFile);
+                    c[i]=chara;
+                    i++;
+                }
+                continue;
+            }
+            i=0;
+
+        }
+    printf("Please write the plate number of the selected city:");
+    scanf("%d" , &source);
+    printf("Please write the plate number of the destination:");
+    scanf("%d" , &target);
+    dijkstra(dist, V , source , target );
+    for(target=1;target<V;target++)
+        dijkstra(dist, V , source , target );
+        printf("\n");
+    return 0;
+}
