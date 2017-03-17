@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1489737086 source:d:\save\c save\prolab2-1\asd\main.cpp
+	<iostream>
+	<stdio.h>
+	<conio.h>
+	<process.h>
+	<string.h>
+	<math.h>
+	<limits.h>
+	<stdlib.h>
+

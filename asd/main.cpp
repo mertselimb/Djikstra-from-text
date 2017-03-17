@@ -1,51 +1,83 @@
+#include <iostream>
 #include<stdio.h>
 #include<conio.h>
 #include<process.h>
 #include<string.h>
 #include<math.h>
-int minDistance(int dist[], int sptSet[])
+#include <limits.h>
+#include <stdlib.h>
+#define V 22
+void dijkstra(int G[V][V],int n,int startnode,int d)
 {
-   // Initialize min value
-   int min = INFINITY, min_index , v;
-
-   for (v = 0; v < 23; v++)
-     if (sptSet[v] == 0 && dist[v] <= min)
-         min = dist[v], min_index = v;
-
-   return min_index;
-}
-int printSolution(int dist[], int n)
-{
-   printf("Vertex   Distance from Source\n");
-   int i ;
-   for (i = 0; i < 23; i++)
-      printf("%d \t\t %d\n", i, dist[i]);
-}
-int calculate(int path[23]){
-    int calculation , i;
-    for(i=1;i<23;i++){
-        calculation=path[i]+calculation;
+    int cost[V][V],distance[V],pred[V];
+    int visited[V],count,mindistance,nextnode,i,j;
+    for(i=0;i<n;i++)
+        for(j=0;j<n;j++)
+            if(G[i][j]==0)
+                cost[i][j]=INFINITY;
+            else
+                cost[i][j]=G[i][j];
+    for(i=0;i<n;i++)
+    {
+        distance[i]=cost[startnode][i];
+        pred[i]=startnode;
+        visited[i]=0;
     }
-    return calculation;
+
+    distance[startnode]=0;
+    visited[startnode]=1;
+    count=1;
+
+    while(count<n-1)
+    {
+        mindistance=INFINITY;
+        for(i=0;i<n;i++)
+            if(distance[i]<mindistance&&!visited[i])
+            {
+                mindistance=distance[i];
+                nextnode=i;
+            }
+            visited[nextnode]=1;
+            for(i=0;i<n;i++)
+                if(!visited[i])
+                    if(mindistance+cost[nextnode][i]<distance[i])
+                    {
+                        distance[i]=mindistance+cost[nextnode][i];
+                        pred[i]=nextnode;
+                    }
+        count++;
+    }
+    for(i=0;i<n;i++)
+        if(i==d)
+        {
+            printf("\nDistance of node%d=%d",i,distance[i]);
+            printf("\nPath=%d",i);
+            j=i;
+            do
+            {
+                j=pred[j];
+                printf("<-%d",j);
+            }while(j!=startnode);
+    }
 }
-int reverse(int n) {
+int reversefunc(int n) {
    static int r = 0;
    if (n == 0)
       return 0;
    r = r * 10;
    r = r + n % 10;
-   reverse(n/10);
+   reversefunc(n/10);
    return r;
 }
 int main()
 {
     FILE *myFile;
     myFile = fopen("sehirmesafe.txt", "r");
-    int f , g ,source,target,start,distance[23][23],i , x , y;
-    char chara , selected[23] ,a[2] , b[2] , c[2];
-    for(f=1;f<23;f++){
-        for(g=1;g<23;g++){
-            distance[f][g]=INFINITY;}}
+    int f , g ,source,target,start,dist[22][22],i , x , y;
+    char chara , selected[V] ,a[2] , b[2] , c[2];
+    for(f=0;f<V;f++){
+        for(g=0;g<V;g++){
+            dist[f][g]=0;}}
     chara=getc(myFile);
     while(!(feof(myFile))){
             for(i=0;i<2;i++){
@@ -86,7 +118,7 @@ int main()
             if(chara=='c'){
                 while(!(feof(myFile))){
                     if(chara=='a'){
-                    distance[x][y]=atoi(c);
+                    dist[x][y]=atoi(c);
                         break;}
                     chara=getc(myFile);
                     c[i]=chara;
@@ -101,23 +133,7 @@ int main()
     scanf("%d" , &source);
     printf("Please write the plate number of the destination:");
     scanf("%d" , &target);
-//----------------------------------------------------------------------------------------------
-    int dist[23] , v  , count;
-    int sptSet[23];
-    for (i = 0; i < 23; i++)
-        dist[i] = INFINITY, sptSet[i] = 0;
-    dist[0] = 0;
-    for (count = 0; count < 23-1; count++)
-     {
-        int u = minDistance(dist, sptSet);
-        sptSet[u] = 1;
-        for (v = 0; v < 23; v++)
-            if (!sptSet[v] && distance[u][v] && dist[u] != INFINITY
-                                       && dist[u]+distance[u][v] < dist[v])
-                dist[v] = dist[u] + distance[u][v];
-     }
-     printSolution(dist, 23);
-    //printf("Closest paths length is ;%d" , calculate(pathBest));
+    dijkstra(dist, V , source , target );
 
     return 0;
 }
