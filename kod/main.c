@@ -23,7 +23,7 @@ int main()
 {
     FILE *myFile;
     myFile = fopen("sehirmesafe.txt", "r");
-    int v=1,f , g ,source,target,least=99,start,distance[23][23],i , x , y,pathNow[23],pathBest[23],distanceNow=0,distanceBest=0,k,save;
+    int found=0,isItEnd=0,v=1,f , g ,source,target,least=INFINITY,start,distance[23][23],i , x , y,pathNow[23],pathBest[23],distanceNow=0,distanceBest=0,k,save;
     char chara , selected[23] ,a[2] , b[2] , c[2];
     for(f=1;f<23;f++){
         for(g=1;g<23;g++){
@@ -83,7 +83,7 @@ int main()
     scanf("%d" , &source);
     printf("Please write the plate number of the destination:");
     scanf("%d" , &target);
-    for(f=1;f<23;f++)
+    for(f=0;f<23;f++)
         selected[f]=0;
     selected[source]=1;
     start=source;
@@ -92,22 +92,38 @@ int main()
             if(distance[start][f]<least&&selected[f]==0){
                 least=distance[start][f];
                 save=f;
+                printf("%d**++" , save);
             }
+            printf("%d" , f);
         }
-        v++;
         selected[save]=1;
         start=save;
         pathNow[v]=save;
-        if(selected[source]=1){
+        if(selected[target])
+           found=1;
+        least=INFINITY;
+        v++;
+        for(k=0;k<23;k++){
+            isItEnd=selected[k]+isItEnd;
+        }
+        printf("%d---" , isItEnd);
+        if(isItEnd>22)
+            break;
+        isItEnd=0;
+        if(found){
+        printf("target 1");
         distanceNow=calculate(pathNow);
             if(distanceNow>distanceBest){
                 for(k=0;k<23;k++){
                     pathBest[k]=pathNow[k];
                 }
                 v=1;
+
             }
+            found=0;
         }
     }
+    printf("Closest paths length is ;%d" , calculate(pathBest));
 
     return 0;
 }
